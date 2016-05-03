@@ -1,0 +1,36 @@
+<!-- preview at  http://www.stefanobovio.com/archive/randomMap/ -->
+
+<!DOCTYPE html>
+<html>
+	
+	<head>
+	
+		<meta name="viewport" content= "width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"> 
+		<style> body {font-family: "Lucida Console", Monaco, monospace, sans-serif;font-size:20px; background-color:#F2F2F2; margin:0;} </style>
+		
+	</head>
+	
+	<body>
+	
+		<script type = "text/javascript" src="js/randomMap.js" ></script>
+		<canvas id = "canvas" width = "512" height = "512" style = "background-color:#525252;"> </canvas>
+		<script type = "text/javascript">
+		
+			const map = new randomMap("canvas");
+			map.resize(window.innerWidth,window.innerHeight);
+			map.set();
+			map.draw();
+			
+			window.onclick = function(){map.update();};
+			
+			window.addEventListener("resize",function(){
+				map.resize(window.innerWidth,window.innerHeight);
+				map.draw();
+			},false);
+			
+		</script>
+		
+	</body>
+	
+</html>
