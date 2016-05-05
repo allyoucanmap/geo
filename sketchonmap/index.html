@@ -1,0 +1,70 @@
+<!--preview at  http://www.stefanobovio.com/archive/sketchonmap/-->
+<!DOCTYPE html>
+<html>
+
+	<head>
+	
+		<title>sketchonmap</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style> 
+		
+			body {font-family: "Trebuchet MS", Helvetica, sans-serif; background-color:#F2F2F2; margin: 0;} 
+			.noselect {
+				-webkit-touch-callout: none; 
+				-webkit-user-select: none;   
+				-khtml-user-select: none;    
+				-moz-user-select: none;      
+				-ms-user-select: none;       
+				user-select: none;        
+			}
+			
+		</style>
+		<script src="js/sketchonmap.js"></script>
+		<script src="js/colorPicker.js"></script>
+	</head>
+	
+	<body>
+		<div id ="somap" width="512" height="512" > </div>
+		<div id ="color" > </div>
+		
+		<script type="text/javascript">
+			
+			const margin = 10;
+			const picker_size = 50;
+			
+			const somap = new sketchonmap("somap",{
+				zoom:2,
+				tile_src:"path/to/tile/[z]/[x]/[y].png",
+				zoom_range:{min:0,max:18},
+			});
+			
+			somap.addCoordinatesBox();
+			
+			const color_picker = new colorPicker("color","absolute",
+			["#FF2F63","#08D9D6","#8109B7","#F35E3E","#FAEE5A","#1BF5AF","#192294","#F2F2F2","#333333"]);
+			color_picker.changeColorEvent(function(color){
+				somap.setPenColor(color);
+			});
+		
+			update_size();
+			window.addEventListener("resize",update_size,false);
+			
+			function update_size(){
+				if(window.innerHeight > window.innerWidth){
+					somap.base.style.marginLeft = margin + "px";
+					somap.base.style.marginTop = (window.innerHeight - (window.innerWidth-margin*2))/2 + "px";
+					somap.repaint(window.innerWidth-margin*2, window.innerWidth-margin*2-picker_size);
+					color_picker.resize(margin,(window.innerHeight - (window.innerWidth-margin*2))/2+window.innerWidth-margin*2-picker_size, window.innerWidth-margin*2,picker_size,"h");
+				}else{
+					somap.base.style.marginLeft = (window.innerWidth - (window.innerHeight-margin*2))/2 +picker_size + "px";
+					somap.base.style.marginTop = margin + "px";
+					somap.repaint(window.innerHeight-margin*2-picker_size, window.innerHeight-margin*2);
+					color_picker.resize((window.innerWidth - (window.innerHeight-margin*2))/2,margin,picker_size,window.innerHeight-margin*2,"v");
+				}
+			}
+			
+		</script>
+		
+	</body>
+	
+</html>
